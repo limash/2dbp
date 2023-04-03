@@ -42,6 +42,7 @@ set(FABM_BUILD_OMP_API ON CACHE BOOL "Build OpenMPI API" FORCE)
 add_subdirectory(${FABM_BASE}/src fabm)
 set(FABM_LIBRARIES fabm fabm_omp)
 set(FABM_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/fabm/modules)
+set(FABM_INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/fabm/omp/modules)
 
 add_executable(brom WIN32
                calculate.F90
