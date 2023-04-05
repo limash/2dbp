@@ -1,0 +1,13 @@
+{
+    // cmake
+    "cmake.cmakePath": "/home/schmiak/miniconda3/envs/fort/bin/cmake",
+    "cmake.configureOnOpen": false,
+    // modern fortran
+    "fortran.fortls.path": "/home/schmiak/miniconda3/envs/fort/bin/fortls",
+    "fortran.linter.includePaths": [
+        "/home/schmiak/src/2dbp/build/debug/modules"
+    ],
+    "fortran.linter.extraArgs": [
+        "-J/home/schmiak/src/2dbp/build/debug/modules"
+    ]
+}

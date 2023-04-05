@@ -5,6 +5,7 @@
 *.u2d
 *.nc
 *.patch
+*.swp
 lib/
 modules/
 build/
@@ -16,3 +17,4 @@ include/version.h
 /scripts/developers/environment.yaml
 /build*
 /util/developers/*.log
+/data_Laptev
