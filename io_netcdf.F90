@@ -16,7 +16,7 @@
 
     use input_mod
     use types_mod
-    
+
     use netcdf
     use fabm_omp, only: type_fabm_model => type_fabm_omp_model
     use fabm_types, only: attribute_length, rk
@@ -26,7 +26,7 @@
     !all is private
     private
     !public functions
-    public init_netcdf, input_netcdf_2, save_netcdf, close_netcdf 
+    public init_netcdf, input_netcdf_2, save_netcdf, close_netcdf
     !netCDF file id
     integer               :: nc_id
     integer, allocatable  :: parameter_id(:)
@@ -47,7 +47,7 @@
     subroutine input_netcdf_2(z_w, dz_w, hz_w, t_w, s_w, kz_w, use_swradWm2, &
         hice, swradWm2, aice, use_hice, gargett_a0, gargett_q, use_gargett, &
         year, i_max, steps_in_yr, k_wat_bbl, u_x_w)
-    
+
 ! inputs hydrophysical data  (time,depth,t,s,Kz,u,v,ice,light) from netCDF files
 !------------------------------------------------------------------------------------------------------------------------
 
@@ -127,7 +127,7 @@
     end select
     deallocate(var)
     end if
-    
+
     if (use_hice.eq.1) then
     call input%get_var('aice', var)
     select type(var)
@@ -141,7 +141,7 @@
     end select
     deallocate(var)
     end if
-    
+
     if (use_swradWm2.eq.1) then
     call input%get_var('swradWm2', var)
     select type(var)
@@ -305,7 +305,7 @@
     !Set the water temperature (t_w), salinity (s_w), vertical diffusivity (kz_w),
     !and (if required) the surface irradiance (Eair) and ice thickness (hice)
   !  do istep=1,steps_in_yr-1 !Loop over hours
-    do istep=0,steps_in_yr !Loop over hours
+    do istep=1,steps_in_yr !Loop over hours
         t_w(i_max,1:k_wat_bbl,istep) = t_temp(istart+istep,1:k_wat_bbl)
         s_w(i_max,1:k_wat_bbl,istep) = s_temp(istart+istep,1:k_wat_bbl)
         Kz_w(i_max,1:k_wat_bbl,istep) = kz_temp(istart+istep,1:k_wat_bbl)
@@ -322,8 +322,8 @@
 !!        u_x_w(i_max,1:k_wat_bbl,istep) = v_temp(istart+istep+1,1:k_wat_bbl)
 !        if (use_hice.eq.1) hice(istep) = hice_temp(istart+istep+1)
 !        if (use_hice.eq.1) aice(istep) = aice_temp(istart+istep+1)
-!        if (use_swradWm2.eq.1) swradWm2(istep) = swradWm2_temp(istart+istep)        
-        
+!        if (use_swradWm2.eq.1) swradWm2(istep) = swradWm2_temp(istart+istep)
+
     enddo
 
     if (use_gargett.eq.1) then
@@ -333,7 +333,7 @@
               call svan(s_w(i_max,j,istep),t_w(i_max,j,istep),z_w(j),dens(j)) !calculate density as f(p,t,s)
           end do
           do j=1, k_wat_bbl-1
-              Kz_w(i_max,j,istep)=gargett_a0 & 
+              Kz_w(i_max,j,istep)=gargett_a0 &
                   /((9.81/(1000.+(dens(j)+dens(j+1))/2.)&
                   *(abs(dens(j+1)-dens(j))/dz_w(j)) &
                   )**gargett_q)
@@ -341,7 +341,7 @@
               Kz_w(i_max,k_wat_bbl,istep)=Kz_w(i_max,k_wat_bbl-1,istep)
       end do
     endif
-    ! fill all the horizontal columns 
+    ! fill all the horizontal columns
     do i = 1, i_max
         t_w(i,:,:)  =  t_w(i_max,:,:)
         s_w(i,:,:)  =  s_w(i_max,:,:)
@@ -349,16 +349,16 @@
         u_x_w(i,:,:)= u_x_w(i_max,:,:)
     enddo
 
-    deallocate(t_temp)
-    deallocate(s_temp)
-    deallocate(kz_temp)
-    deallocate(u_temp)
-    deallocate(v_temp)
-    if (use_hice.eq.1) deallocate(hice_temp)
-    if (use_hice.eq.1) deallocate(aice_temp)  
-    if (use_swradWm2.eq.1) deallocate(swradWm2_temp)  
-    deallocate(z_temp)
-    deallocate(time_temp)
+    ! deallocate(t_temp)
+    ! deallocate(s_temp)
+    ! deallocate(kz_temp)
+    ! deallocate(u_temp)
+    ! deallocate(v_temp)
+    ! if (use_hice.eq.1) deallocate(hice_temp)
+    ! if (use_hice.eq.1) deallocate(aice_temp)
+    ! if (use_swradWm2.eq.1) deallocate(swradWm2_temp)
+    ! deallocate(z_temp)
+    ! deallocate(time_temp)
     end subroutine
 
 
@@ -384,12 +384,12 @@
     integer                          :: dim_ids(3), dim_ids2(3), dim_ids0(2)
 
 	write(*,*) "k_max = ", k_max
-	
+
     first = .true.
     print *, 'NetCDF version: ', trim(nf90_inq_libvers())
     nc_id = -1
     call check_err(nf90_create(fn, NF90_CLOBBER, nc_id))
-    
+
     !Define the dimensions
     call check_err(nf90_def_dim(nc_id, "i", i_max, i_dim_id))
     call check_err(nf90_def_dim(nc_id, "z", k_max, z_dim_id))
@@ -516,7 +516,7 @@
         ip_sol, ip_par, x, u_x, i_day, id, idt, output_step, input_step, gas_air_sea ) !i_sec_pr) ! i_day here = i_day + 1
 
     !Input variables
-    integer, intent(in)                    :: i_max, k_max, julianday, use_swradWm2, input_step 
+    integer, intent(in)                    :: i_max, k_max, julianday, use_swradWm2, input_step
     integer, intent(in)                    :: use_hice, ip_sol, ip_par, i_day, id, idt, output_step
     real(rk), dimension(:,:,:), intent(in) :: cc, t, s, kz, kzti, wti, fick_per_day, sink_per_day, u_x, gas_air_sea
     class (type_fabm_model), pointer :: model
@@ -529,16 +529,16 @@
     !Note: The input arguments to nf90_put_var MUST be vectors, even if the length is 1
     !      Removing the dimension(1) or (1) from dum above triggers a spurious error "not finding nf90_put_var"
     integer                                :: ip, i, i_sec, istep_out
-    
-    
+
+
 !    day_part=real(id)/real(idt)
 !    i_sec=((i_day-1)*86400 + int((86400*(id/100))/(idt/100)))/output_step ! as in Horten
 !    istep_out = int((julianday)*86400/input_step)
-    
+
     day_part=real(id)/real(idt)
     i_sec=int(((i_day-1)*86400 + int(86400*id/idt))/output_step) ! time count for saving  (in array numbers)
     istep_out = max(1, int(((julianday-1)*86400 + int(86400*id/idt))/input_step)) ! time count to select data from arrays, i.e. temp, salt
-    
+
  !Define nf90_put_var arguments "start" and "count" for z, z2, time, (cc,t,s) and (fick,kz)
     start_z = 1
     count_z = k_max
@@ -580,11 +580,11 @@
                     call check_err(nf90_put_var(nc_id, parameter_id_diag(ip), temp_matrix, start_cc, count_cc))
                 end if
             end if
-        end do 
+        end do
         call check_err(nf90_put_var(nc_id, T_id, t(:,:,istep_out), start_cc, count_cc))
         call check_err(nf90_put_var(nc_id, S_id, s(:,:,istep_out), start_cc, count_cc))
         call check_err(nf90_put_var(nc_id, Kz_id, kz(:,:,istep_out), start_flux, count_flux))
-        
+
         if (i_max.gt.1) call check_err(nf90_put_var(nc_id, u_x_id, u_x(:,:,istep_out), start_cc, count_cc))
 
         call check_err(nf90_put_var(nc_id, Kz_sol_id, kzti(:,:,ip_sol), start_flux, count_flux))
@@ -596,7 +596,7 @@
             dum(1) = swradWm2(i_day) !julianday
             call check_err(nf90_put_var(nc_id, swradWm2_id, dum, start_time, count_time))
         end if
-        
+
         if (use_hice.eq.1) then
             dum(1) = hice(i_day) !julianday
             call check_err(nf90_put_var(nc_id, hice_id, dum, start_time, count_time))

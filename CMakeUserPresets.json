@@ -16,6 +16,17 @@
         "FABM_BASE": "~/src/fabm-omp",
         "FABM_NIVA_BASE": "~/src/brom-bgh"
       }
+    },
+    {
+      "name": "release",
+      "displayName": "Release Config",
+      "description": "Release with a default generator",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "FABM_BASE": "~/src/fabm-omp",
+        "FABM_NIVA_BASE": "~/src/brom-bgh"
+      }
     }
   ]
 }
