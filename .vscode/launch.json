@@ -11,7 +11,7 @@
       "program": "${workspaceFolder}/build/debug/brom",
       "args": [], // Possible input args for a.out
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}/data_Laptev",
+      "cwd": "${userHome}/data_Laptev",
       "environment": [],
       "externalConsole": false,
       "MIMode": "gdb",
@@ -30,7 +30,7 @@
       "program": "${command:cmake.launchTargetPath}",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "${workspaceFolder}/data_Laptev",
+      "cwd": "${userHome}/data_Laptev",
       "environment": [
         {
           "name": "PATH",
