@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../data_Laptev"
+		}
+	],
+	"settings": {
+		"fortran.fortls.path": "/home/schmiak/miniconda3/envs/fort/bin/fortls",
+		"fortran.linter.includePaths": [
+			"/home/schmiak/src/2dbp/build/debug/modules",
+			"/home/schmiak/src/2dbp/build/debug/fabm/modules",
+			"/home/schmiak/src/2dbp/build/debug/fabm/omp/modules",
+			"/home/schmiak/.local/netcdff/include"
+		]
+	}
+}
