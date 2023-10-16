@@ -4,16 +4,31 @@
 			"path": "."
 		},
 		{
+			"path": "../fabm-omp"
+		},
+		{
+			"path": "../brom-bgh"
+		},
+		{
 			"path": "../../data_Laptev"
 		}
 	],
 	"settings": {
+    	"cmake.cmakePath": "/home/schmiak/miniconda3/envs/fort/bin/cmake",
+    	"cmake.configureOnOpen": false,
 		"fortran.fortls.path": "/home/schmiak/miniconda3/envs/fort/bin/fortls",
+		"fortran.fortls.directories": [
+			"./**",
+			"/home/schmiak/src/fabm-omp/**",
+			"/home/schmiak/src/brom-bgh/**",
+		],
 		"fortran.linter.includePaths": [
-			"/home/schmiak/src/2dbp/build/debug/modules",
-			"/home/schmiak/src/2dbp/build/debug/fabm/modules",
-			"/home/schmiak/src/2dbp/build/debug/fabm/omp/modules",
-			"/home/schmiak/.local/netcdff/include"
-		]
+			"/usr/include",
+            "/home/schmiak/src/2dbp/**",
+		],
+		"fortran.linter.extraArgs": [
+			"-Wall",
+            "-J/home/schmiak/src/2dbp/build/debug/modules",
+		],
 	}
 }
